@@ -21,9 +21,9 @@ a:visited {
   color: #333333;
 }
 #profile-pic img {
-  width: 100%;
+  width: 50%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   height: auto;
-  border-radius: 8px;
+  border-radius: 4px;
 }
