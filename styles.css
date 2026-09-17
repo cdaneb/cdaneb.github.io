@@ -3,8 +3,38 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
   color: #333333;
-  padding-left: 15%;
+  margin-left: 110px;
+  margin-right: 110px;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.side-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 110px;
+  background-color: powderblue;
+  background-image: radial-gradient(circle, rgba(25, 25, 112, 0.35) 1.5px, transparent 1.6px);
+  background-size: 20px 20px;
+  background-position: 10px 10px;
+  z-index: -1;
+}
+.side-bar--left { left: 0; }
+.side-bar--right { right: 0; }
+
+@media (max-width: 900px) {
+  .side-bar {
+    display: none;
+  }
+  body {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 h1 {
   color: #191970;
 }
