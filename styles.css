@@ -11,3 +11,12 @@ h1 {
 p {
   color: #2F4F4F;
 }
+footer {
+  margin-top: 3rem;
+}
+a {
+  color: #333333;
+}
+a:visited {
+  color: #333333;
+}
