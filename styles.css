@@ -20,11 +20,10 @@ a {
 a:visited {
   color: #333333;
 }
-#profile-pic {
-  max-width: 200px;
-}
 #profile-pic img {
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   height: auto;
   border-radius: 8px;
 }
