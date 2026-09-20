@@ -8,4 +8,4 @@ Includes:
 
 - Projects
 - Favicons
-- Images (wip)
+- Images
