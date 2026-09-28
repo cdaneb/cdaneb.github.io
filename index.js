@@ -6,4 +6,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-console.log("Hand-built by Dane Beels — no AI, just HTML/CSS/JS.");
+console.log("Hello there!");
+console.log("C3T-HELO-4413");
