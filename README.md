@@ -7,5 +7,5 @@ Deployed using GitHub pages.
 Includes:
 
 - Projects
-- Favicons
-- Images
+- Favicon
+- TDA animation (WIP)
