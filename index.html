@@ -1,59 +1,292 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dane Beels</title>
+    <meta name="description" content="Dane Beels: West Point cadet studying mathematical sciences, computer science, and cybersecurity. Research in topological data analysis and network defense.">
+    <meta name="author" content="Christian Dane Beels">
+    <link rel="canonical" href="https://cdaneb.github.io/">
 
-    <!-- Standard Favicons -->
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cdaneb.github.io/">
+    <meta property="og:title" content="Dane Beels">
+    <meta property="og:description" content="West Point cadet studying math, computer science, and cybersecurity.">
+    <meta name="twitter:card" content="summary">
+
+    <meta name="theme-color" content="#0B1A33">
+
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-
-    <!-- Apple Devices -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-
-    <!-- Android/Chrome Manifest -->
     <link rel="manifest" href="favicon_io/site.webmanifest">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dane Beels</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Apply saved / preferred theme before first paint to avoid a flash -->
+    <script>
+      (function () {
+        var theme = "dark";
+        try {
+          var saved = localStorage.getItem("theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+          else if (window.matchMedia("(prefers-color-scheme: light)").matches) theme = "light";
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.classList.add("js");
+      })();
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="side-bar side-bar--left" aria-hidden="true"></div>
-    <div class="side-bar side-bar--right" aria-hidden="true"></div>
-    <main>
-        <br><h1 class="text-center">Dane Beels</h1><br>
-        
-        3rd-year cadet at West Point studying pure math, computer science, and cybersecurity.<br><br>
-        
-        This site is an ongoing project. All of the code for this site is handwritten without the use of AI.
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        <h3><a href="pdfs/beels_cv.pdf">Curriculum Vitae</a></h3>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="bg-grid" aria-hidden="true"></div>
 
-        <h2>Projects</h2>
+    <!-- ============ NAV ============ -->
+    <header class="site-header">
+      <nav class="nav container" aria-label="Primary">
+        <a class="nav__logo" href="#top">Dane Beels</a>
 
-        <a href="pdfs/tda_poster.pdf">Addressing a Blind Spot in a Topological Data Analysis-Based Data Poisoning Detector</a> (Poster)<br><br>
-        
-        <a href="pdfs/tsunami_pdes.pdf">Modeling the 2004 Indian Ocean Tsunami Using BVPs and PDEs</a> (Presentation)<br><br>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
 
-        <a href="pdfs/real_time_doxxing.pdf">Speech Recognition as a Threat Vector in Real-Time Doxxing</a> (Paper)<br><br>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#photos">Photos</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <div class="nav__actions">
+            <button class="term-btn" type="button" data-open-terminal title="Open the terminal">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l6-5-6-5M12 19h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Terminal <kbd aria-hidden="true">`</kbd>
+            </button>
+            <a class="icon-btn" href="https://github.com/cdaneb" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            </a>
+            <button class="icon-btn" type="button" id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+              <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
 
-        <h2>Links</h2>
-        
-        >> <a href="https://orcid.org/0009-0001-8528-115X">ORCiD</a><br>
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section class="hero container" id="top">
+        <h1 class="hero__name">Dane Beels</h1>
+        <p class="hero__lead">
+          Third-year cadet at <strong>West Point</strong> studying pure math, computer science, and cybersecurity.
+          I apply topology and data analysis to problems in network defense.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="pdfs/beels_cv.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View CV
+          </a>
+          <a class="btn btn--ghost" href="https://github.com/cdaneb" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            GitHub
+          </a>
+          <a class="btn btn--ghost" href="#contact">Contact</a>
+        </div>
 
-        >> <a href="mailto:christian.beels@westpoint.edu">West Point email</a><br>
+        <!-- Prominent launcher for the interactive terminal -->
+        <button class="launcher" type="button" data-open-terminal>
+          <span class="launcher__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="launcher__text">
+            <span class="launcher__title">Prefer the command line?</span>
+            <span class="launcher__sub">Explore this site from an interactive terminal.</span>
+          </span>
+          <span class="launcher__key" aria-hidden="true">press <kbd>`</kbd></span>
+        </button>
+      </section>
 
-        >> <a href="mailto:cdanebeels@gmail.com">Personal email</a><br>
+      <!-- ============ ABOUT ============ -->
+      <section class="section container reveal" id="about" aria-labelledby="about-h">
+        <h2 class="section__title" id="about-h">About</h2>
+        <div class="prose">
+          <p>
+            I'm a B.S. Mathematical Sciences candidate (Class of 2028) at the United States Military Academy.
+            My research sits where math meets security. I use topological data analysis to find poisoned
+            training data in network intrusion detection systems, and I study how adversaries could turn everyday technology against U.S. forces.
+          </p>
+          <p>
+            Outside of research, I compete with the West Point Cyber Team and take photos when I travel.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section class="section container reveal" id="projects" aria-labelledby="projects-h">
+        <h2 class="section__title" id="projects-h">Projects</h2>
+
+        <div class="cards">
+          <article class="card">
+            <header class="card__head">
+              <span class="badge">Poster</span>
+              <span class="card__meta">MAA MathFest 2026</span>
+            </header>
+            <h3 class="card__title">Addressing a Blind Spot in a Topological Data Analysis-Based Data Poisoning Detector</h3>
+            <p class="card__desc">
+              Reconstructs and modifies a TDA-based detector to find and remove poisoned records from network intrusion detection training data.
+            </p>
+            <a class="card__link" href="pdfs/tda_poster.pdf" target="_blank" rel="noopener">View poster <span aria-hidden="true">→</span><span class="sr-only"> (PDF, opens in new tab)</span></a>
+          </article>
+
+          <article class="card">
+            <header class="card__head">
+              <span class="badge">Paper</span>
+              <span class="card__meta">Army Cyber Institute, 2025</span>
+            </header>
+            <h3 class="card__title">Speech Recognition as a Threat Vector in Real-Time Doxxing</h3>
+            <p class="card__desc">
+              Tests whether adversaries could use consumer wearable technology to expose information about U.S. forces in real time,
+              and what that means for operational security.
+            </p>
+            <a class="card__link" href="pdfs/real_time_doxxing.pdf" target="_blank" rel="noopener">Read paper <span aria-hidden="true">→</span><span class="sr-only"> (PDF, opens in new tab)</span></a>
+          </article>
+
+          <article class="card">
+            <header class="card__head">
+              <span class="badge">Presentation</span>
+              <span class="card__meta">Applied math</span>
+            </header>
+            <h3 class="card__title">Modeling the 2004 Indian Ocean Tsunami Using BVPs and PDEs</h3>
+            <p class="card__desc">
+              Models how the 2004 Indian Ocean tsunami propagated using boundary value problems and partial differential equations.
+            </p>
+            <a class="card__link" href="pdfs/tsunami_pdes.pdf" target="_blank" rel="noopener">View slides <span aria-hidden="true">→</span><span class="sr-only"> (PDF, opens in new tab)</span></a>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ PHOTOS ============ -->
+      <section class="section container reveal" id="photos" aria-labelledby="photos-h">
+        <h2 class="section__title" id="photos-h">Photography</h2>
+        <p class="section__lead">A few photos I've taken.</p>
+
+        <ul class="gallery">
+          <li>
+            <a class="gallery__item" href="images/web/granada-cathedral.jpg" data-caption="Granada Cathedral, Spain">
+              <img src="images/web/granada-cathedral-thumb.jpg" width="800" height="800" loading="lazy"
+                   alt="Looking straight up at the ornate carved stone vaults and central dome of Granada Cathedral">
+            </a>
+          </li>
+          <li>
+            <a class="gallery__item" href="images/web/alhambra.jpg" data-caption="The Alhambra and the Sierra Nevada, Granada">
+              <img src="images/web/alhambra-thumb.jpg" width="800" height="800" loading="lazy"
+                   alt="The Alhambra fortress on a wooded hill with snow-capped mountains behind it">
+            </a>
+          </li>
+          <li>
+            <a class="gallery__item" href="images/web/hutchinson-island.jpg" data-caption="Hutchinson Island, Florida">
+              <img src="images/web/hutchinson-island-thumb.jpg" width="800" height="450" loading="lazy"
+                   alt="A long sandy beach lined with high-rise condominiums under a blue sky">
+            </a>
+          </li>
+          <li>
+            <a class="gallery__item" href="images/web/ratatouille.jpg" data-caption="Ratatouille">
+              <img src="images/web/ratatouille-thumb.jpg" width="600" height="800" loading="lazy"
+                   alt="Overhead view of a ratatouille with spiraled slices of zucchini, squash, and tomato in a skillet">
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section class="section container reveal" id="contact" aria-labelledby="contact-h">
+        <h2 class="section__title" id="contact-h">Contact</h2>
+        <p class="section__lead">Open to research collaborations and conversations about math and security.</p>
+
+        <ul class="links">
+          <li class="link-row">
+            <a href="https://github.com/cdaneb" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              <span class="link-row__label">GitHub</span>
+              <span class="link-row__value">github.com/cdaneb</span>
+            </a>
+          </li>
+          <li class="link-row">
+            <a href="https://orcid.org/0009-0001-8528-115X" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="16" text-anchor="middle" font-size="9" font-family="Inter, sans-serif" font-weight="700" fill="currentColor">iD</text></svg>
+              <span class="link-row__label">ORCiD</span>
+              <span class="link-row__value">0009-0001-8528-115X</span>
+            </a>
+          </li>
+          <li class="link-row">
+            <a href="mailto:christian.beels@westpoint.edu">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              <span class="link-row__label">West Point email</span>
+              <span class="link-row__value">christian.beels@westpoint.edu</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="christian.beels@westpoint.edu" aria-label="Copy West Point email">Copy</button>
+          </li>
+          <li class="link-row">
+            <a href="mailto:cdanebeels@gmail.com">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              <span class="link-row__label">Personal email</span>
+              <span class="link-row__value">cdanebeels@gmail.com</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="cdanebeels@gmail.com" aria-label="Copy personal email">Copy</button>
+          </li>
+        </ul>
+      </section>
     </main>
-    <footer class="text-center">
-        &copy; <span id="year"></span> Dane Beels
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p>&copy; <span id="year">2026</span> Dane Beels</p>
+        <p>Built with HTML, CSS &amp; JavaScript</p>
+      </div>
     </footer>
+
+    <!-- ============ INTERACTIVE TERMINAL ============ -->
+    <dialog class="shell" id="shell" aria-label="Interactive terminal">
+      <div class="terminal">
+        <div class="terminal__bar">
+          <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+          <span class="terminal__title">dane@westpoint: ~ (type "help")</span>
+          <button class="shell__close" type="button" data-close-terminal aria-label="Close terminal">×</button>
+        </div>
+        <div class="terminal__body shell__body">
+          <div class="shell__output" id="shell-output" aria-live="polite"></div>
+          <form class="shell__form" id="shell-form" autocomplete="off">
+            <label for="shell-input" class="t-prompt">guest@westpoint:~$</label>
+            <input id="shell-input" class="shell__input" type="text" spellcheck="false" autocapitalize="off">
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ============ PHOTO LIGHTBOX ============ -->
+    <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+      <figure class="lightbox__figure">
+        <img class="lightbox__img" id="lightbox-img" alt="">
+        <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+      </figure>
+      <button class="lightbox__btn lightbox__close" type="button" data-lightbox="close" aria-label="Close photo">×</button>
+      <button class="lightbox__btn lightbox__prev" type="button" data-lightbox="prev" aria-label="Previous photo">‹</button>
+      <button class="lightbox__btn lightbox__next" type="button" data-lightbox="next" aria-label="Next photo">›</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script src="index.js"></script>
   </body>
 </html>

@@ -1,0 +1,5 @@
+.DS_Store
+
+# Original photos contain GPS metadata; only commit stripped copies in images/web/
+images/*
+!images/web/
