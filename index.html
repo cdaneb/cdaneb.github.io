@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dane Beels</title>
-    <meta name="description" content="Dane Beels: West Point cadet studying mathematical sciences, computer science, and cybersecurity. Research in topological data analysis and network defense.">
+    <meta name="description" content="Dane Beels: West Point cadet studying mathematical sciences, computer science, and cybersecurity. Research in topological data analysis and AI security.">
     <meta name="author" content="Christian Dane Beels">
     <link rel="canonical" href="https://cdaneb.github.io/">
 
@@ -64,7 +64,6 @@
           <ul class="nav__links">
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#photos">Photos</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
           <div class="nav__actions">
@@ -87,34 +86,28 @@
     <main id="main">
       <!-- ============ HERO ============ -->
       <section class="hero container" id="top">
-        <h1 class="hero__name">Dane Beels</h1>
-        <p class="hero__lead">
-          Third-year cadet at <strong>West Point</strong> studying pure math, computer science, and cybersecurity.
-          I apply topology and data analysis to problems in network defense.
-        </p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="pdfs/beels_cv.pdf" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            View CV
-          </a>
-          <a class="btn btn--ghost" href="https://github.com/cdaneb" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
-            GitHub
-          </a>
-          <a class="btn btn--ghost" href="#contact">Contact</a>
+        <div class="hero__text">
+          <h1 class="hero__name">Dane Beels</h1>
+          <p class="hero__lead">
+            Third-year cadet at <strong>West Point</strong> studying pure math, computer science, and cybersecurity.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="pdfs/beels_cv.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              View CV
+            </a>
+            <a class="btn btn--ghost" href="https://github.com/cdaneb" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+              GitHub
+            </a>
+            <a class="btn btn--ghost" href="#contact">Contact</a>
+          </div>
         </div>
 
-        <!-- Prominent launcher for the interactive terminal -->
-        <button class="launcher" type="button" data-open-terminal>
-          <span class="launcher__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M4 17l6-5-6-5M12 19h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <span class="launcher__text">
-            <span class="launcher__title">Prefer the command line?</span>
-            <span class="launcher__sub">Explore this site from an interactive terminal.</span>
-          </span>
-          <span class="launcher__key" aria-hidden="true">press <kbd>`</kbd></span>
-        </button>
+        <figure class="hero__photo">
+          <img src="images/web/dane-beels.jpg" width="828" height="1104"
+               alt="Dane Beels in West Point full-dress gray uniform, standing outside at dusk">
+        </figure>
       </section>
 
       <!-- ============ ABOUT ============ -->
@@ -122,12 +115,7 @@
         <h2 class="section__title" id="about-h">About</h2>
         <div class="prose">
           <p>
-            I'm a B.S. Mathematical Sciences candidate (Class of 2028) at the United States Military Academy.
-            My research sits where math meets security. I use topological data analysis to find poisoned
-            training data in network intrusion detection systems, and I study how adversaries could turn everyday technology against U.S. forces.
-          </p>
-          <p>
-            Outside of research, I compete with the West Point Cyber Team and take photos when I travel.
+            I am a Math major at West Point with a significant interest in cybersecurity and AI. I research the applications of topological data analysis and other mathematical models on representing the security of AI systems.
           </p>
         </div>
       </section>
@@ -165,7 +153,7 @@
           <article class="card">
             <header class="card__head">
               <span class="badge">Presentation</span>
-              <span class="card__meta">Applied math</span>
+              <span class="card__meta">Numerical Analysis Final Project</span>
             </header>
             <h3 class="card__title">Modeling the 2004 Indian Ocean Tsunami Using BVPs and PDEs</h3>
             <p class="card__desc">
@@ -176,44 +164,9 @@
         </div>
       </section>
 
-      <!-- ============ PHOTOS ============ -->
-      <section class="section container reveal" id="photos" aria-labelledby="photos-h">
-        <h2 class="section__title" id="photos-h">Photography</h2>
-        <p class="section__lead">A few photos I've taken.</p>
-
-        <ul class="gallery">
-          <li>
-            <a class="gallery__item" href="images/web/granada-cathedral.jpg" data-caption="Granada Cathedral, Spain">
-              <img src="images/web/granada-cathedral-thumb.jpg" width="800" height="800" loading="lazy"
-                   alt="Looking straight up at the ornate carved stone vaults and central dome of Granada Cathedral">
-            </a>
-          </li>
-          <li>
-            <a class="gallery__item" href="images/web/alhambra.jpg" data-caption="The Alhambra and the Sierra Nevada, Granada">
-              <img src="images/web/alhambra-thumb.jpg" width="800" height="800" loading="lazy"
-                   alt="The Alhambra fortress on a wooded hill with snow-capped mountains behind it">
-            </a>
-          </li>
-          <li>
-            <a class="gallery__item" href="images/web/hutchinson-island.jpg" data-caption="Hutchinson Island, Florida">
-              <img src="images/web/hutchinson-island-thumb.jpg" width="800" height="450" loading="lazy"
-                   alt="A long sandy beach lined with high-rise condominiums under a blue sky">
-            </a>
-          </li>
-          <li>
-            <a class="gallery__item" href="images/web/ratatouille.jpg" data-caption="Ratatouille">
-              <img src="images/web/ratatouille-thumb.jpg" width="600" height="800" loading="lazy"
-                   alt="Overhead view of a ratatouille with spiraled slices of zucchini, squash, and tomato in a skillet">
-            </a>
-          </li>
-        </ul>
-      </section>
-
       <!-- ============ CONTACT ============ -->
       <section class="section container reveal" id="contact" aria-labelledby="contact-h">
         <h2 class="section__title" id="contact-h">Contact</h2>
-        <p class="section__lead">Open to research collaborations and conversations about math and security.</p>
-
         <ul class="links">
           <li class="link-row">
             <a href="https://github.com/cdaneb" target="_blank" rel="noopener">
@@ -272,17 +225,6 @@
           </form>
         </div>
       </div>
-    </dialog>
-
-    <!-- ============ PHOTO LIGHTBOX ============ -->
-    <dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
-      <figure class="lightbox__figure">
-        <img class="lightbox__img" id="lightbox-img" alt="">
-        <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
-      </figure>
-      <button class="lightbox__btn lightbox__close" type="button" data-lightbox="close" aria-label="Close photo">×</button>
-      <button class="lightbox__btn lightbox__prev" type="button" data-lightbox="prev" aria-label="Previous photo">‹</button>
-      <button class="lightbox__btn lightbox__next" type="button" data-lightbox="next" aria-label="Next photo">›</button>
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

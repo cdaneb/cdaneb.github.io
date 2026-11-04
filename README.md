@@ -7,8 +7,8 @@ Plain HTML, CSS, and JavaScript: no frameworks, no build step.
 
 - Navy / cyan / powder-blue theme with a light/dark toggle (remembered per browser)
 - Interactive terminal: press `` ` `` or click **Terminal**, then type `help`
-- Subtle background animation: a drifting point cloud with edges between nearby points (a nod to topological data analysis)
-- Project cards, a photo gallery with a full-screen viewer, and copy-to-clipboard email buttons
+- Subtle background animation: a drifting point cloud with edges between nearby points (a nod to topological data analysis); points scatter away from the cursor and drift back
+- Project cards and copy-to-clipboard email buttons
 - Respects `prefers-reduced-motion`; all content works without JavaScript
 
 ## Structure

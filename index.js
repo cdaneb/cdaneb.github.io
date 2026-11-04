@@ -164,53 +164,6 @@
   }
 
   /* ------------------------------------------------------------------ */
-  /* Photo lightbox                                                      */
-  /* ------------------------------------------------------------------ */
-  function initLightbox() {
-    const dialog = $("#lightbox");
-    const img = $("#lightbox-img");
-    const caption = $("#lightbox-caption");
-    const items = $$(".gallery__item");
-    if (!dialog || !img || !items.length || typeof dialog.showModal !== "function") return;
-
-    let index = 0;
-    const show = (i) => {
-      index = (i + items.length) % items.length;
-      const a = items[index];
-      const thumb = $("img", a);
-      img.src = a.getAttribute("href");
-      img.alt = thumb ? thumb.alt : "";
-      caption.textContent = a.dataset.caption || "";
-    };
-
-    items.forEach((a, i) => {
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        show(i);
-        dialog.showModal();
-      });
-    });
-
-    dialog.addEventListener("click", (e) => {
-      const action = e.target.closest("[data-lightbox]");
-      if (action) {
-        const kind = action.dataset.lightbox;
-        if (kind === "close") dialog.close();
-        else show(index + (kind === "next" ? 1 : -1));
-        return;
-      }
-      if (e.target === dialog || e.target.classList.contains("lightbox__figure")) dialog.close();
-    });
-
-    dialog.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") show(index + 1);
-      else if (e.key === "ArrowLeft") show(index - 1);
-    });
-
-    dialog.addEventListener("close", () => { img.removeAttribute("src"); });
-  }
-
-  /* ------------------------------------------------------------------ */
   /* Background: drifting point cloud with Vietoris–Rips-style edges     */
   /* (a nod to topological data analysis)                                */
   /* ------------------------------------------------------------------ */
@@ -226,6 +179,12 @@
     let running = true;
     let rafId = null;
     const RADIUS = 140;
+    // Cursor interaction: points near the pointer are pushed away, then ease
+    // back to their normal drift. The cursor also links to nearby points.
+    const MOUSE_RADIUS = 160;
+    const PUSH = 0.9;
+    const DAMPING = 0.94;
+    const mouse = { x: 0, y: 0, active: false };
 
     const readColors = () => {
       const cs = getComputedStyle(root);
@@ -251,8 +210,28 @@
           }
         }
       }
-      ctx.fillStyle = `rgba(${nodeRGB}, 0.4)`;
+      if (mouse.active) {
+        for (const p of points) {
+          const dx = p.x - mouse.x, dy = p.y - mouse.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MOUSE_RADIUS) {
+            ctx.strokeStyle = `rgba(${edgeRGB}, ${(1 - d / MOUSE_RADIUS) * 0.35})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(p.x, p.y);
+            ctx.stroke();
+          }
+        }
+      }
       for (const p of points) {
+        let alpha = 0.4;
+        if (mouse.active) {
+          const dx = p.x - mouse.x, dy = p.y - mouse.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MOUSE_RADIUS) alpha += (1 - d / MOUSE_RADIUS) * 0.5;
+        }
+        ctx.fillStyle = `rgba(${nodeRGB}, ${alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
@@ -269,11 +248,13 @@
 
       const target = Math.max(20, Math.min(60, Math.round((w * h) / 26000)));
       while (points.length < target) {
+        const bvx = (Math.random() - 0.5) * 0.2;
+        const bvy = (Math.random() - 0.5) * 0.2;
         points.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.2,
-          vy: (Math.random() - 0.5) * 0.2,
+          vx: bvx, vy: bvy,   // current velocity
+          bvx, bvy,           // resting drift velocity
           r: 1 + Math.random() * 1.2,
         });
       }
@@ -284,10 +265,25 @@
 
     const step = () => {
       for (const p of points) {
+        if (mouse.active) {
+          const dx = p.x - mouse.x, dy = p.y - mouse.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < MOUSE_RADIUS * MOUSE_RADIUS && d2 > 0.01) {
+            const d = Math.sqrt(d2);
+            const f = (1 - d / MOUSE_RADIUS) * PUSH;
+            p.vx += (dx / d) * f;
+            p.vy += (dy / d) * f;
+          }
+        }
+        // ease back toward the resting drift
+        p.vx = p.bvx + (p.vx - p.bvx) * DAMPING;
+        p.vy = p.bvy + (p.vy - p.bvy) * DAMPING;
         p.x += p.vx;
         p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
+        if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); p.bvx = Math.abs(p.bvx); }
+        else if (p.x > w) { p.x = w; p.vx = -Math.abs(p.vx); p.bvx = -Math.abs(p.bvx); }
+        if (p.y < 0) { p.y = 0; p.vy = Math.abs(p.vy); p.bvy = Math.abs(p.bvy); }
+        else if (p.y > h) { p.y = h; p.vy = -Math.abs(p.vy); p.bvy = -Math.abs(p.bvy); }
       }
       draw();
       if (running) rafId = requestAnimationFrame(step);
@@ -304,6 +300,17 @@
     });
 
     if (reducedMotion) { draw(); return; }
+
+    // The canvas has pointer-events: none, so listen on the window.
+    window.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.active = true;
+    }, { passive: true });
+    const leave = () => { mouse.active = false; };
+    document.addEventListener("mouseout", (e) => { if (!e.relatedTarget) leave(); });
+    window.addEventListener("blur", leave);
 
     document.addEventListener("visibilitychange", () => {
       running = !document.hidden;
@@ -344,11 +351,7 @@
       type: $(".badge", c).textContent.trim(),
       href: $(".card__link", c).getAttribute("href"),
     }));
-    const photos = $$(".gallery__item").map((a) => ({
-      caption: a.dataset.caption || "",
-      href: a.getAttribute("href"),
-    }));
-    const SECTIONS = ["about", "projects", "photos", "contact"];
+    const SECTIONS = ["about", "projects", "contact"];
 
     const go = (hash) => { dialog.close(); location.hash = hash; };
 
@@ -363,7 +366,7 @@
       },
       whoami: {
         desc: "who is this guy?",
-        run: () => print("Christian Dane Beels: West Point cadet (c/o 2028), B.S. Mathematical Sciences.\nResearch: topological data analysis and network defense."),
+        run: () => print("Christian Dane Beels: West Point cadet (c/o 2028), B.S. Mathematical Sciences.\nResearch: topological data analysis and the security of AI systems."),
       },
       projects: {
         desc: "list projects",
@@ -379,11 +382,6 @@
           window.open(p.href, "_blank", "noopener");
           print("opening " + esc(p.title) + " …", "t-dim");
         },
-      },
-      photos: {
-        desc: "list photos",
-        run: () => photos.forEach((p) =>
-          print(`<a href="${esc(p.href)}" target="_blank" rel="noopener">${esc(p.caption)}</a>`)),
       },
       cv: {
         desc: "open my CV (PDF)",
@@ -486,8 +484,6 @@
       if (e.key !== "`" || e.metaKey || e.ctrlKey || e.altKey) return;
       const tag = (e.target.tagName || "").toLowerCase();
       if (["input", "textarea", "select"].includes(tag) || e.target.isContentEditable) return;
-      const lightbox = $("#lightbox");
-      if (lightbox && lightbox.open) return;
       e.preventDefault();
       open();
     });
@@ -503,7 +499,7 @@
 
   /* ------------------------------------------------------------------ */
   const boot = () => {
-    [initYear, initTheme, initNav, initReveal, initCopy, initLightbox,
+    [initYear, initTheme, initNav, initReveal, initCopy,
      initBackground, initTerminal, initConsole]
       .forEach((fn) => { try { fn(); } catch (err) { console.error(fn.name, err); } });
   };
